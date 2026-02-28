@@ -1,5 +1,3 @@
-![Network Diagram](../images/network-diagram.png)
-
 # SOC Homelab — Architecture Overview
 
 ## Project Purpose
