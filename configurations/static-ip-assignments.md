@@ -30,28 +30,28 @@ Connectivity between all machines was verified using ping after static IP assign
 ping 192.168.100.10
 ```
 
-![Ping Test Windows to Server](../images/ping-test-windows-to-server)
+![Ping Test Windows to Server](../images/ping-test-windows-to-server.png)
 
 ### Windows 11 → Kali Linux
 ```
 ping 192.168.100.30
 ```
 
-![Ping Test Windows to Kali](../images/ping-test-windows-to-kali)
+![Ping Test Windows to Kali](../images/ping-test-windows-to-kali.png)
 
 ### Kali Linux → Windows 11
 ```
 ping 192.168.100.20
 ```
 
-![Ping Test Kali to Windows](../images/ping-test-kali-to-windows)
+![Ping Test Kali to Windows](../images/ping-test-kali-to-windows.png)
 
 ### Kali Linux → Ubuntu Server
 ```
 ping 192.168.100.10
 ```
 
-![Ping Test Kali to Server](../images/ping-test-kali-to-server)
+![Ping Test Kali to Server](../images/ping-test-kali-to-server.png)
 
 ## Configuration Notes
 
