@@ -45,7 +45,7 @@ The agent service was also configured to start automatically on every system boo
 Set-Service -Name "WazuhSvc" -StartupType Automatic
 ```
 
-### Service Start Screenshot
+### Service Running Screenshot
 
 ![Wazuh Agent Status](../images/wazuh-agent-status.png)
 
