@@ -61,14 +61,14 @@ After static IP assignment, connectivity to both other VMs on the LAN Segment wa
 ping 192.168.100.20
 ```
 
-![Windows 11 Ping Test](../images/ping-test-kali-to-windows)
+![Windows 11 Ping Test](../images/ping-test-kali-to-windows.png)
 
 ### Kali → Ubuntu Server
 
 ```bash
 ping 192.168.100.10
 ```
-![Ubuntu Server Ping Test](../images/ping-test-kali-to-server)
+![Ubuntu Server Ping Test](../images/ping-test-kali-to-server.png)
 
 ## Role in Lab Exercises
 
