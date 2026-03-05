@@ -39,10 +39,6 @@ cd C:\Tools\Sysmon
 
 The `-accepteula` flag silently accepts the license agreement, and `-i` initiates the installation.
 
-### Installation Screenshot
-
-![Sysmon Installation Output](../images/sysmon-install.png)
-
 ## Verify Sysmon is Running
 
 After installation, confirm Sysmon is running as a service:
@@ -54,7 +50,7 @@ Expected output should show **Status: Running**.
 
 ### Service Verification Screenshot
 
-![Sysmon Service Running](../images/sysmon-service-running.png)
+![Sysmon Service Running](../images/sysmon-status.png)
 
 ## Auto-Start on Boot
 
@@ -71,7 +67,7 @@ rule.groups: sysmon
 
 ### Wazuh Dashboard Showing Sysmon Events
 
-![Sysmon Events in Wazuh Dashboard](../images/wazuh-sysmon-events.png)
+![Sysmon Events in Wazuh Dashboard](../images/sysmon-logs-overview.png)
 
 ## Configuration Notes
 
