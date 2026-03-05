@@ -24,9 +24,7 @@ Storage was allocated at 80GB, more generously than the other VMs, to accommodat
 
 The screenshot below confirms the Ubuntu Server VM is fully installed and operational.
 
-<p align="center">
-  <img src="images/ubuntu-terminal.png" alt="Ubuntu Server Terminal" width="700" />
-</p>
+![Ubuntu Server Terminal](../images/ubuntu-terminal.png)
 
 ## Network Configuration
 
@@ -43,9 +41,7 @@ A static IP address was manually assigned to the Ubuntu Server VM to ensure cons
 
 The screenshot below shows the output of `ip a` confirming the static IP address has been correctly assigned to the Ubuntu Server VM.
 
-<p align="center">
-  <img src="images/ubuntu-ip-config.png" alt="Ubuntu Server IP Configuration" width="700" />
-</p>
+![Ubuntu IP Configuration](../images/ubuntu-ip-config.png)
 
 ## System Update
 
@@ -54,12 +50,6 @@ After installation, the system package list and all installed packages were upda
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
-
-The screenshot below shows the terminal output confirming all packages are up to date.
-
-<p align="center">
-  <img src="images/ubuntu-apt-update.png" alt="Ubuntu Server APT Update and Upgrade" width="700" />
-</p>
 
 ## Wazuh Services
 
@@ -75,9 +65,7 @@ sudo systemctl start wazuh-dashboard
 
 The screenshot below confirms all three Wazuh services are active and running.
 
-<p align="center">
-  <img src="images/ubuntu-wazuh-running.png" alt="Wazuh Services Running on Ubuntu Server" width="700" />
-</p>
+![Wazuh Services Running](../images/ubuntu-wazuh-running.png)
 
 ## Connectivity Verification
 
@@ -89,9 +77,7 @@ After static IP assignment, connectivity to both other VMs on the LAN Segment wa
 ping 192.168.100.20
 ```
 
-<p align="center">
-  <img src="images/ubuntu-ping-windows.png" alt="Ping from Ubuntu Server to Windows 11" width="700" />
-</p>
+![Ping Test Ubuntu to Windows](ping-test-server-to-windows.png)
 
 ### Ubuntu Server → Kali Linux
 
@@ -99,13 +85,11 @@ ping 192.168.100.20
 ping 192.168.100.30
 ```
 
-<p align="center">
-  <img src="images/ubuntu-ping-kali.png" alt="Ping from Ubuntu Server to Kali Linux" width="700" />
-</p>
+![Ping Test Server to Kali](../images/ping-test-server-to-kali.png)
 
 ## Configuration Notes
 
 - Ubuntu Server runs headless with no desktop environment installed, reducing RAM and CPU overhead and leaving more resources available for the Wazuh stack
-- 80GB storage was allocated specifically to accommodate Wazuh log data accumulation over time as lab exercises are performed — this is the most storage intensive VM in the lab
+- 80GB storage was allocated specifically to accommodate Wazuh log data accumulation over time, as lab exercises are performed - this is the most storage-intensive VM in the lab
 - All Wazuh services are set to start automatically on boot via systemctl enable, meaning the SIEM is fully operational as soon as the VM boots without manual intervention
 - The Wazuh dashboard is accessible via browser from the Windows 11 VM at `https://192.168.100.10`
