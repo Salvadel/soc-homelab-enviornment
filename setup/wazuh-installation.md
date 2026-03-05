@@ -90,16 +90,6 @@ sudo systemctl start wazuh-indexer
 sudo systemctl start wazuh-dashboard
 ```
 
-## Troubleshooting Encountered
-
-### Wazuh Manager Timeout on Startup
-
-After the initial installation, the Wazuh Manager service occasionally failed to start with a `failed (result: timeout)` error, indicating the service was taking too long to initialize and being killed by systemd before fully starting.
-
-**Root cause:** The issue was caused by insufficient system resources during startup when multiple services were initializing simultaneously after a cold boot.
-
-**Resolution:** A full reboot of the Ubuntu Server VM resolved the issue. After the reboot, all three Wazuh services started successfully and have been stable since.
-
 ## Configuration Notes
 
 - The Wazuh dashboard uses a self-signed SSL certificate by default - the browser security warning on first access is expected and can be safely bypassed within the isolated lab environment
