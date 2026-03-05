@@ -1,6 +1,6 @@
 # SOC Homelab
 
-A home Security Operations Center (SOC) lab built to simulate real-world threat detection and incident response workflows. The lab replicates a basic corporate network environment consisting of a monitored Windows endpoint, a SIEM server, and an attack machine — all isolated within a private virtual network. The purpose is to develop hands-on experience in attack simulation, log analysis, alert triage, and incident documentation, core skills required for SOC Analyst roles.
+A home Security Operations Center (SOC) lab built to simulate real-world threat detection and incident response workflows. The lab replicates a basic corporate network environment consisting of a monitored Windows endpoint, a SIEM server, and an attack machine - all isolated within a private virtual network. The purpose is to develop hands-on experience in attack simulation, log analysis, alert triage, and incident documentation, core skills required for SOC Analyst roles.
 
 ## Network Diagram
 
