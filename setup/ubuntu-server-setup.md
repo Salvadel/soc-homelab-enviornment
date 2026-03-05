@@ -77,7 +77,7 @@ After static IP assignment, connectivity to both other VMs on the LAN Segment wa
 ping 192.168.100.20
 ```
 
-![Ping Test Ubuntu to Windows](ping-test-server-to-windows.png)
+![Ping Test Ubuntu to Windows](../images/ping-test-server-to-windows.png)
 
 ### Ubuntu Server → Kali Linux
 
