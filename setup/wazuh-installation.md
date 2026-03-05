@@ -6,15 +6,15 @@ This document covers the installation and configuration of the Wazuh SIEM stack 
 
 Wazuh was chosen as the SIEM platform for this lab over alternatives such as Splunk and Elastic SIEM for the following reasons:
 
-**Cost** — Wazuh is completely free and open source with no licensing restrictions. Splunk's free tier is limited to 500MB of data per day, which is insufficient for a lab generating continuous endpoint telemetry. Elastic SIEM requires significant configuration overhead to reach feature parity with Wazuh out of the box.
+**Cost** - Wazuh is completely free and open source with no licensing restrictions. Splunk's free tier is limited to 500MB of data per day, which is insufficient for a lab generating continuous endpoint telemetry. Elastic SIEM requires significant configuration overhead to reach feature parity with Wazuh out of the box.
 
-**Enterprise Relevance** — Wazuh is widely deployed in real enterprise environments, making it directly relevant to SOC analyst job roles. Experience with Wazuh translates directly to real world skills rather than being purely academic.
+**Enterprise Relevance** - Wazuh is widely deployed in real enterprise environments, making it directly relevant to SOC analyst job roles. Experience with Wazuh translates directly to real world skills rather than being purely academic.
 
-**All-in-One Stack** — Wazuh provides a complete SIEM solution, including log collection, threat detection, alerting, and a dashboard in a single installation. This reduces setup complexity and allows focus on security operations rather than infrastructure configuration.
+**All-in-One Stack** - Wazuh provides a complete SIEM solution, including log collection, threat detection, alerting, and a dashboard in a single installation. This reduces setup complexity and allows focus on security operations rather than infrastructure configuration.
 
-**Resource Efficiency** — Wazuh runs comfortably within the hardware constraints of a homelab. The full stack, including Manager, Indexer, and Dashboard, operates within 4GB RAM on the Ubuntu Server VM.
+**Resource Efficiency** - Wazuh runs comfortably within the hardware constraints of a homelab. The full stack, including Manager, Indexer, and Dashboard, operates within 4GB RAM on the Ubuntu Server VM.
 
-**Community and Documentation** — Wazuh has extensive official documentation, an active community, and regular updates, making troubleshooting and learning straightforward.
+**Community and Documentation** - Wazuh has extensive official documentation, an active community, and regular updates, making troubleshooting and learning straightforward.
 
 ## Wazuh Stack Components
 
@@ -43,7 +43,7 @@ The Wazuh dashboard is accessible from the Windows 11 VM browser at:
 https://192.168.100.10
 ```
 
-A self-signed SSL certificate is used by default, which causes the browser to display a security warning on first access. This is expected behavior — proceed by clicking **Advanced > Proceed** to access the dashboard.
+A self-signed SSL certificate is used by default, which causes the browser to display a security warning on first access. This is expected behavior - proceed by clicking **Advanced > Proceed** to access the dashboard.
 
 ### Wazuh Dashboard Login Page
 
@@ -102,7 +102,7 @@ After the initial installation, the Wazuh Manager service occasionally failed to
 
 ## Configuration Notes
 
-- The Wazuh dashboard uses a self-signed SSL certificate by default — the browser security warning on first access is expected and can be safely bypassed within the isolated lab environment
+- The Wazuh dashboard uses a self-signed SSL certificate by default - the browser security warning on first access is expected and can be safely bypassed within the isolated lab environment
 - Default dashboard credentials should be changed after the first login for security best practice, even within an isolated lab
-- The Wazuh Manager stores all logs and alert data on the Ubuntu Server disk — this is why 80GB storage was allocated to this VM to accommodate data accumulation over time
+- The Wazuh Manager stores all logs and alert data on the Ubuntu Server disk - this is why 80GB storage was allocated to this VM to accommodate data accumulation over time
 - Full Wazuh documentation is available at [https://documentation.wazuh.com](https://documentation.wazuh.com)
