@@ -4,7 +4,7 @@ A home Security Operations Center (SOC) lab built to simulate real-world threat 
 
 ## Network Diagram
 
-![Network Diagram](../images/network-diagram.png)
+![Network Diagram](images/network-diagram.png)
 
 ## Technologies Used
 
