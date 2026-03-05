@@ -1,6 +1,6 @@
-# Static IP Assignments
+# Static IP Configuration
 
-This document outlines the static IP configuration applied to each virtual machine in the SOC homelab. Static IPs are used in place of DHCP to ensure consistent addressing across all machines, which is critical for Wazuh agent-to-manager communication and reliable attack simulation targeting.
+This document outlines the static IP configuration applied to each virtual machine in the SOC homelab. Static IPs are used in place of DHCP to ensure consistent addressing across all machines, which is critical for Wazuh agent-to-manager communication and reliable attack simulation targeting. For a visual overview of how these machines connect, see [Architecture Overview](architecture-overview.md).
 
 ## Network Information
 
@@ -29,33 +29,29 @@ Connectivity between all machines was verified using ping after static IP assign
 ```
 ping 192.168.100.10
 ```
-
 ![Ping Test Windows to Server](../images/ping-test-windows-to-server.png)
 
 ### Windows 11 → Kali Linux
 ```
 ping 192.168.100.30
 ```
-
 ![Ping Test Windows to Kali](../images/ping-test-windows-to-kali.png)
 
 ### Kali Linux → Windows 11
 ```
 ping 192.168.100.20
 ```
-
 ![Ping Test Kali to Windows](../images/ping-test-kali-to-windows.png)
 
 ### Kali Linux → Ubuntu Server
 ```
 ping 192.168.100.10
 ```
-
 ![Ping Test Kali to Server](../images/ping-test-kali-to-server.png)
 
 ## Configuration Notes
 
 - All static IPs were assigned manually through each VM's network settings
-- No default gateway is configured on any machine as the LAN Segment has no routing to external networks
-- DNS is not configured as all communication occurs directly via IP address within the isolated segment
-- IP assignments were confirmed stable across VM reboots before proceeding with Wazuh installation
+- No default gateway is configured on any machine, as the LAN Segment has no routing to external networks
+- DNS is not configured, as all communication occurs directly via IP address within the isolated segment
+- IP assignments were confirmed stable across VM reboots before proceeding with [Wazuh installation](../setup/wazuh-setup.md)
