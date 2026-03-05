@@ -60,7 +60,7 @@ The screenshot below shows the Wazuh dashboard home page after successful login,
 After installation, all three Wazuh services were verified as active and running using the following command on Ubuntu Server:
 
 ```bash
-echo "wazuh-manager: $(sudo systemctl is-active wazuh-manager)" && echo "wazuh-indexer: $(sudo systemctl is-active wazuh-indexer)" && echo "wazuh-dashboard: $(sudo systemctl is-active wazuh-dashboard)"
+sudo systemctl is-active wazuh-manager.service wazuh-indexer.service wazuh-dashboard.service
 ```
 
 Expected output:
