@@ -16,7 +16,7 @@ This document covers the installation and configuration of the Windows 11 Home v
 
 ## Installation
 
-Windows 11 Home was installed as a virtual machine in VMware Workstation using the official Windows 11 ISO. During installation, a local account was created without linking to a Microsoft account to keep the environment self-contained and independent of any external services.
+Windows 11 Home was installed as a virtual machine in VMware Workstation using the official Windows 11 ISO. During installation, a local account was created without linking to a Microsoft account to keep the environment self-contained and independent of any external services. The official Windows 11 ISO can be downloaded from [Microsoft's official download page](https://www.microsoft.com/software-download/windows11).
 
 ### Windows 11 Desktop
 
@@ -62,11 +62,11 @@ The Windows 11 VM has two security monitoring components installed that work tog
 
 ### Wazuh Agent
 
-The Wazuh agent is installed and configured to forward Windows Event Logs and Sysmon logs to the Wazuh Manager at 192.168.100.10. Full installation details are documented in the [Wazuh Agent Configuration](../configurations/wazuh-agent-config.md) file.
+The Wazuh agent is installed and configured to forward Windows Event Logs and Sysmon logs to the Wazuh Manager at 192.168.100.10. Full installation details are documented in the [Wazuh Agent Setup](../setup/wazuh-agent-setup.md) file.
 
 ### Sysmon
 
-Sysmon is installed to significantly enhance the quality and detail of endpoint logs collected by the Wazuh agent. Full installation details are documented in the [Sysmon Setup](../configurations/sysmon-setup.md) file.
+Sysmon is installed to significantly enhance the quality and detail of endpoint logs collected by the Wazuh agent. Full installation details are documented in the [Sysmon Setup](../setup/sysmon-setup.md) file.
 
 The screenshot below shows both services running and confirmed active on the Windows 11 VM.
 
@@ -77,7 +77,6 @@ The screenshot below shows both services running and confirmed active on the Win
 After static IP assignment, connectivity to both other VMs on the LAN Segment was verified using ping.
 
 ### Windows 11 → Ubuntu Server
-
 ```powershell
 ping 192.168.100.10
 ```
@@ -85,7 +84,6 @@ ping 192.168.100.10
 ![Windows Ping Test to Ubuntu Server](../images/ping-test-windows-to-server.png)
 
 ### Windows 11 → Kali Linux
-
 ```powershell
 ping 192.168.100.30
 ```
@@ -97,7 +95,6 @@ ping 192.168.100.30
 To allow realistic attack simulations from the Kali Linux machine, several default Windows 11 security controls were intentionally disabled. These changes are strictly contained within the isolated lab environment and do not affect any external systems or networks. Each configuration change is documented below, along with the rationale for why it was applied.
 
 ### Windows Defender Real Time Protection Disabled
-
 ```powershell
 Set-MpPreference -DisableRealtimeMonitoring $true
 ```
@@ -107,7 +104,6 @@ Set-MpPreference -DisableRealtimeMonitoring $true
 ![Windows 11 Defender Settings](../images/windows-defender-off.png)
 
 ### Windows Firewall Disabled
-
 ```powershell
 netsh advfirewall set allprofiles state off
 ```
@@ -117,7 +113,6 @@ netsh advfirewall set allprofiles state off
 ![Windows 11 Firewall Settings](../images/windows-firewall-off.png)
 
 ### SMB Signing Disabled
-
 ```powershell
 Set-SmbServerConfiguration -RequireSecuritySignature $false -Force
 ```
