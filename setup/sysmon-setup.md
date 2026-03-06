@@ -20,9 +20,9 @@ Sysmon is part of the Microsoft Sysinternals suite and can be downloaded directl
 
 | File | Description |
 |---|---|
-| Sysmon.exe | 32-bit version — not used |
-| Sysmon64.exe | 64-bit version — used for this lab |
-| Sysmon64a.exe | ARM 64-bit version — not used |
+| Sysmon.exe | 32-bit version - not used |
+| Sysmon64.exe | 64-bit version - used for this lab |
+| Sysmon64a.exe | ARM 64-bit version - not used |
 | Eula.txt | License agreement |
 
 Since Windows 11 is a 64-bit operating system, **Sysmon64.exe** is the correct binary.
