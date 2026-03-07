@@ -9,10 +9,10 @@ This project is a home Security Operations Center (SOC) lab built to simulate a 
 The lab consists of five virtual machines running on VMware Workstation. Each machine serves a distinct role in the SOC workflow:
 
 - **pfSense (192.168.100.1)** - Firewall and router sitting at the network perimeter, managing all traffic between the internal LAN Segment and the internet via VMware NAT
-- **Ubuntu Server — SIEM (192.168.100.10)** - SIEM server running Wazuh, responsible for collecting and analyzing security logs from monitored endpoints
+- **Ubuntu Server - SIEM (192.168.100.10)** - SIEM server running Wazuh, responsible for collecting and analyzing security logs from monitored endpoints
 - **Windows 11 Home (192.168.100.20)** - Target endpoint simulating a corporate workstation, monitored by a Wazuh agent
 - **Kali Linux (192.168.100.30)** - Attack machine used to simulate threat actor behavior against the Windows endpoint
-- **Ubuntu Server — SOAR (192.168.100.40)** - SOAR server running Shuffle and TheHive, responsible for automated alert triage, case management, and analyst notifications via Slack
+- **Ubuntu Server - SOAR (192.168.100.40)** - SOAR server running Shuffle and TheHive, responsible for automated alert triage, case management, and analyst notifications via Slack
 
 ## Network Design
 
