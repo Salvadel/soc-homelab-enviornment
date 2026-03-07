@@ -37,11 +37,11 @@ cd C:\Tools\Sysmon
 .\Sysmon64.exe -accepteula -i
 ```
 
-The `-accepteula` flag silently accepts the license agreement, and `-i` initiates the installation.
+The `-accepteula` flag silently accepts the license agreement and `-i` initiates the installation.
 
 ## Verify Sysmon is Running
 
-After installation, confirm Sysmon is running as a service:
+After installation confirm Sysmon is running as a service:
 ```powershell
 Get-Service Sysmon64
 ```
@@ -54,11 +54,11 @@ Expected output should show **Status: Running**.
 
 ## Auto-Start on Boot
 
-Sysmon was configured to start automatically on system boot, so it does not need to be manually started each session. This was configured via the Windows Services manager (`services.msc`) by setting the Sysmon64 service Startup Type to **Automatic**.
+Sysmon was configured to start automatically on system boot so it does not need to be manually started each session. This was configured via the Windows Services manager (`services.msc`) by setting the Sysmon64 service Startup Type to **Automatic**.
 
 ## Wazuh Integration
 
-No additional configuration is required on the Wazuh side to begin collecting Sysmon logs once the Sysmon log channel has been added to ossec.conf. Full details on the ossec.conf configuration is documented in [Wazuh Agent Setup](wazuh-agent-setup.md).
+No additional configuration is required on the Wazuh side to begin collecting Sysmon logs once the Sysmon log channel has been added to ossec.conf. Full details on the ossec.conf configuration are documented in [Wazuh Agent Setup](wazuh-agent-setup.md).
 
 Sysmon events appear in the Wazuh dashboard under the Windows agent's event log view and can be filtered using:
 ```
@@ -73,5 +73,5 @@ rule.groups: sysmon
 
 - Sysmon64.exe is stored permanently at `C:\Tools\Sysmon\` and should not be deleted
 - No custom Sysmon configuration file has been applied - Sysmon is running with default settings
-- A future improvement is to apply a community ruleset, such as the SwiftOnSecurity Sysmon config to further improve detection coverage and reduce noise
+- A future improvement is to apply a community ruleset such as the SwiftOnSecurity Sysmon config to further improve detection coverage and reduce noise
 - Sysmon version can be checked by running `.\Sysmon64.exe` with no arguments in the installation directory
