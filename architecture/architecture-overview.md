@@ -2,25 +2,30 @@
 
 ## Project Purpose
 
-This project is a home Security Operations Center (SOC) lab built to simulate a real-world threat detection and incident response environment. The lab replicates a basic corporate network consisting of a monitored Windows endpoint, a SIEM server, and an attack machine. The purpose is to develop hands-on experience in attack simulation, log analysis, alert triage, and incident documentation, core skills required for SOC Analyst roles. All activity is fully contained within an isolated virtual network with no connectivity to the internet or host network.
+This project is a home Security Operations Center (SOC) lab built to simulate a real-world threat detection and incident response environment. The lab replicates a basic corporate network consisting of a monitored Windows endpoint, a SIEM server, a SOAR automation server, a firewall, and an attack machine. The purpose is to develop hands-on experience in attack simulation, log analysis, alert triage, automated response workflows, and incident documentation — core skills required for SOC Analyst roles. All attack activity is fully contained within an isolated virtual network, with controlled internet access managed through a pfSense firewall for SOC tooling.
 
 ## Environment Summary
 
-The lab consists of three virtual machines running on VMware Workstation. Each machine serves a distinct role in the SOC workflow:
+The lab consists of five virtual machines running on VMware Workstation. Each machine serves a distinct role in the SOC workflow:
 
-- **Ubuntu Server (192.168.100.10)** -- SIEM server running Wazuh, responsible for collecting and analyzing security logs from monitored endpoints
-- **Windows 11 Home (192.168.100.20)** -- Target endpoint simulating a corporate workstation, monitored by a Wazuh agent
-- **Kali Linux (192.168.100.30)** -- Attack machine used to simulate threat actor behavior against the Windows endpoint
+- **pfSense (192.168.100.1)** — Firewall and router sitting at the network perimeter, managing all traffic between the internal LAN Segment and the internet via VMware NAT
+- **Ubuntu Server (192.168.100.10)** — SIEM server running Wazuh, responsible for collecting and analyzing security logs from monitored endpoints
+- **Windows 11 Home (192.168.100.20)** — Target endpoint simulating a corporate workstation, monitored by a Wazuh agent
+- **Kali Linux (192.168.100.30)** — Attack machine used to simulate threat actor behavior against the Windows endpoint
+- **SOC Tools VM (192.168.100.40)** — SOAR server running Shuffle, TheHive, and Gotify, responsible for automated alert triage, case management, and analyst notifications
 
 ## Network Design
 
 ![Network Diagram](../images/network-diagram.png)
 
-All three virtual machines are connected through a VMware LAN Segment configured as a fully isolated internal network using the subnet **192.168.100.0/24**. The LAN Segment has no NAT, no DHCP, and no routing to the Internet or the host machine's physical network. Each VM is assigned a static IP address to ensure consistent communication between machines. For a full breakdown of IP assignments, see [Static IP Configuration](static-ip-config.md).
+All five virtual machines are connected through a VMware LAN Segment using the subnet **192.168.100.0/24**. pfSense sits at the network perimeter with two network adapters — a WAN adapter connected to VMware NAT for internet access, and a LAN adapter connected to the internal segment. All VMs use pfSense at 192.168.100.1 as their default gateway, meaning all internet bound traffic is routed through pfSense before reaching the outside network. Internal VM to VM traffic stays on the LAN Segment and bypasses pfSense entirely. Each VM is assigned a static IP address to ensure consistent communication between machines. For a full breakdown of IP assignments see [Static IP Configuration](static-ip-config.md).
 
-Traffic flow in the lab operates in two directions. Attack traffic flows from Kali Linux toward the Windows 11 endpoint, simulating a threat actor targeting a corporate workstation. Log and alert data flows from the Wazuh agent on Windows 11 to the Wazuh manager on Ubuntu Server, where it is processed and made visible on the web-based Wazuh dashboard.
+Traffic flow in the lab operates across three paths. Attack traffic flows from Kali Linux toward the Windows 11 endpoint, simulating a threat actor targeting a corporate workstation. Log and alert data flows from the Wazuh agent on Windows 11 to the Wazuh Manager on Ubuntu Server, where it is processed and triggers automated response workflows. Automation and notification data flows from Wazuh to Shuffle on the SOC Tools VM, which creates cases in TheHive and sends notifications via Gotify. For a detailed view of how data moves through the full pipeline see the [Data Flow Diagram](../images/data-flow-diagram.png).
 
 ## Machine Roles & Responsibilities
+
+### pfSense — Firewall / Router (192.168.100.1)
+pfSense acts as the network perimeter firewall and router for the lab environment. It sits between the VMware NAT adapter and the internal LAN Segment, managing all traffic entering and leaving the network. pfSense logs all traffic passing through it, providing network level visibility that complements the endpoint level visibility provided by Wazuh. This mirrors how real SOC environments layer network and endpoint monitoring for more complete detection coverage. Full installation details are documented in [pfSense Setup](../setup/pfsense-setup.md).
 
 ### Ubuntu Server — SIEM (192.168.100.10)
 Ubuntu Server hosts the full Wazuh stack, including the Wazuh Manager, Wazuh Indexer, and Wazuh Dashboard. The Wazuh Manager receives security logs forwarded by agents installed on monitored endpoints, processes them against detection rules, and generates alerts for suspicious activity. The dashboard is accessible via browser at `https://192.168.100.10` from the Windows VM. Ubuntu was chosen for its stability, low resource utilization, and widespread use in the industry. Full installation details are documented in [Ubuntu Server Setup](../setup/ubuntu-setup.md) and [Wazuh Setup](../setup/wazuh-setup.md).
@@ -31,38 +36,43 @@ Windows 11 Home serves as the simulated corporate workstation and primary attack
 ### Kali Linux — Attack Machine (192.168.100.30)
 Kali Linux serves as the simulated threat actor machine. It is used to perform attack exercises against the Windows 11 endpoint, such as network scanning, brute force attacks, and exploitation attempts. No Wazuh agent is installed on Kali, as it is the source of attacks rather than a monitored endpoint. Kali has no special configuration beyond static IP assignment and standard package updates. Full setup details are documented in [Kali Linux Setup](../setup/kali-setup.md).
 
+### SOC Tools VM — SOAR Server (192.168.100.40)
+The SOC Tools VM runs the full SOAR stack for the lab, including Shuffle for automation workflows, TheHive for case management, and Gotify for analyst notifications. When Wazuh generates an alert it triggers a Shuffle webhook, which automatically creates a case in TheHive and sends a Gotify notification to the analyst. This automates the first stage of alert triage and replicates the kind of SOAR pipeline used in real SOC environments. Full installation details are documented in [SOC Tools VM Setup](../setup/soc-tools-vm-setup.md), [Shuffle Setup](../setup/shuffle-setup.md), [TheHive Setup](../setup/thehive-setup.md), and [Gotify Setup](../setup/gotify-setup.md).
+
 ## Security Monitoring Stack
 
-The monitoring pipeline works as follows. The Wazuh agent installed on Windows 11 continuously collects Windows Event Logs and Sysmon logs from the endpoint. These logs are forwarded in real time over the isolated LAN Segment to the Wazuh Manager running on Ubuntu Server (192.168.100.10). The Wazuh Manager processes incoming logs against its built-in detection ruleset and generates alerts for suspicious or noteworthy activity. All alerts and agent telemetry are visible through the Wazuh Dashboard, which is accessible through HTTPS via browser from the Windows 11 VM. This setup simulates launching an attack from Kali, then pivoting to the Windows 11 machine to investigate the resulting alerts in the Wazuh dashboard, replicating a SOC detection and investigation workflow. Full details on the monitoring stack are documented in [Wazuh Agent Setup](../setup/wazuh-agent-setup.md) and [Sysmon Setup](../setup/sysmon-setup.md).
+The monitoring and response pipeline works as follows. The Wazuh agent installed on Windows 11 continuously collects Windows Event Logs and Sysmon logs from the endpoint. These logs are forwarded in real time over the LAN Segment to the Wazuh Manager running on Ubuntu Server (192.168.100.10). The Wazuh Manager processes incoming logs against its built-in detection ruleset and generates alerts for suspicious or noteworthy activity. When a qualifying alert fires, a webhook triggers Shuffle on the SOC Tools VM (192.168.100.40), which runs an automated workflow to create a case in TheHive and send a Gotify notification to the analyst. The analyst then investigates the case through the TheHive dashboard and cross references findings in the Wazuh dashboard. This setup replicates a complete SOC detection and response workflow — from attack through detection, automation, case creation, and investigation. Full details on the monitoring stack are documented in [Wazuh Agent Setup](../setup/wazuh-agent-setup.md) and [Sysmon Setup](../setup/sysmon-setup.md).
 
 ## Design Decisions & Rationale
 
-**Why LAN Segment over NAT:**
-A LAN Segment provides complete network isolation between the VMs and the outside world. NAT would have given the VMs internet access through the host machine, which introduces unnecessary risk when running attack tools and intentionally vulnerable configurations. The LAN Segment ensures all attack activity is fully contained and cannot affect the host network or any external systems.
+**Why pfSense as the network firewall:**
+pfSense is a free, open source firewall platform that is widely used in both homelab and enterprise environments. Adding pfSense to the lab introduces a real network perimeter, firewall rule management, and traffic logging that complements the endpoint level detection provided by Wazuh. It also provides the controlled internet access required for the SOC Tools VM to function fully while keeping attack simulation traffic isolated within the internal LAN Segment.
+
+**Why a dedicated SOC Tools VM separate from the Wazuh server:**
+Keeping the detection layer and response layer on separate VMs mirrors how real SOC environments separate their tooling. It also prevents resource contention — Wazuh and TheHive each have significant memory requirements, and separating them ensures both perform reliably during active exercises. The separation also means a failure or reboot of one server does not take down the entire SOC pipeline.
 
 **Why Wazuh over other SIEMs:**
 Wazuh is free, open source, and widely deployed in real enterprise environments, making it directly relevant to SOC job roles. Compared to alternatives like Splunk, which requires significant resources and licensing for full functionality, Wazuh provides a much more complete experience, including log collection, alerting, and a dashboard within the hardware constraints of a homelab. It also has strong documentation and community support.
 
 **Why Sysmon was added on top of the base Wazuh agent:**
-The default Windows Event Logs captured by the Wazuh agent provide limited visibility into endpoint activity. Sysmon helps to improve the system log quality by capturing detailed process creation events, parent-child process relationships, network connection attempts, and file creation events. This additional telemetry is essential for detecting and investigating the kinds of attacks simulated in this lab and reflects a real environment, where Sysmon is commonly deployed alongside SIEM agents.
+The default Windows Event Logs captured by the Wazuh agent provide limited visibility into endpoint activity. Sysmon improves log quality by capturing detailed process creation events, parent-child process relationships, network connection attempts, and file creation events. This additional telemetry is essential for detecting and investigating the kinds of attacks simulated in this lab and reflects a real environment where Sysmon is commonly deployed alongside SIEM agents.
 
 **Why Windows was intentionally weakened:**
-Out of the box, Windows 11 blocks most attack techniques through Defender, the firewall, and strong default configurations. Since the purpose of the lab is to simulate attacks to create telemetry and practice detection, these controls were selectively disabled to allow a greater attack scope and generate meaningful high-value alerts. This is acceptable in isolated lab environments, as all changes are contained within a VM with no connectivity to the open Internet.
+Out of the box, Windows 11 blocks most attack techniques through Defender, the firewall, and strong default configurations. Since the purpose of the lab is to simulate attacks to create telemetry and practice detection, these controls were selectively disabled to allow a greater attack scope and generate meaningful high-value alerts. This is acceptable in isolated lab environments as all attack activity is contained within the LAN Segment with no direct path to the open internet.
 
 ## Known Limitations
 
 - Only a single Windows endpoint is monitored. A real SOC environment would monitor multiple endpoints simultaneously.
 - No Kali Linux Wazuh agent is deployed, meaning attacker-side activity is not logged or correlated.
-- No network-level monitoring is in place. There is no firewall VM such as pfSense or OPNsense, meaning there is no visibility into network traffic between machines beyond what endpoint logs capture.
 - No Active Directory environment exists yet, limiting the ability to simulate AD-based attacks which are common in real corporate environments.
 - Windows is running unactivated which restricts access to some built-in management tools.
-- The lab currently simulates a flat network with no segmentation beyond the single LAN Segment.
+- The lab currently simulates a flat network with no segmentation between the attacker and the monitored endpoints beyond pfSense firewall rules.
 
 ## Future Improvements
 
-- **pfSense or OPNsense firewall VM** - Add network-level visibility, traffic monitoring, and segmentation between the attacker and target networks
-- **Windows Server with Active Directory** - Simulate a domain environment to practice AD-based attacks and detections such as pass-the-hash, Kerberoasting, and privilege escalation
-- **Additional Windows endpoints** - Add more target machines to simulate lateral movement across multiple workstations
-- **Wazuh agent on Kali** - Deploy an agent on the attack machine to correlate attacker-side activity with defender-side alerts
-- **Custom Sysmon configuration** - Implement a community Sysmon config such as the SwiftOnSecurity ruleset to improve detection coverage further
-- **Vulnerability scanner** - Integrate a tool like OpenVAS or Nessus to add vulnerability assessment exercises to the lab
+- **Windows Server with Active Directory** — Simulate a domain environment to practice AD-based attacks and detections such as pass-the-hash, Kerberoasting, and privilege escalation
+- **Additional Windows endpoints** — Add more target machines to simulate lateral movement across multiple workstations
+- **Wazuh agent on Kali** — Deploy an agent on the attack machine to correlate attacker-side activity with defender-side alerts
+- **Custom Sysmon configuration** — Implement a community Sysmon config such as the SwiftOnSecurity ruleset to improve detection coverage further
+- **Vulnerability scanner** — Integrate a tool like OpenVAS or Nessus to add vulnerability assessment exercises to the lab
+- **Network segmentation** — Add a dedicated attacker network segment to force all attack traffic through pfSense firewall rules, more closely mirroring a real perimeter defense scenario
