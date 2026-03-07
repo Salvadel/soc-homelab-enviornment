@@ -45,7 +45,7 @@ ping 192.168.100.20
 ```
 ![Ping Test Kali to Windows](../images/ping-test-kali-to-windows.png)
 
-### Kali Linux → Ubuntu Server — SIEM
+### Kali Linux → Ubuntu Server - SIEM
 ```
 ping 192.168.100.10
 ```
