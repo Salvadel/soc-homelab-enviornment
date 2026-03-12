@@ -49,8 +49,6 @@ After installation, the system package list and all installed packages were upda
 sudo apt update && sudo apt upgrade -y
 ```
 
-![Kali System Update](../images/kali-system-update.png)
-
 ## Connectivity Verification
 
 After static IP assignment, connectivity was verified by pinging the Windows 11 target endpoint to confirm that attack traffic can reach its intended destination. For full network connectivity verification across all critical lab communication paths, see [Static IP Configuration](../architecture/static-ip-configuration.md).
