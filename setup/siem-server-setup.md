@@ -29,7 +29,7 @@ The screenshot below confirms the Ubuntu Server - SIEM VM is fully installed and
 
 ## Network Configuration
 
-A static IP address was manually assigned to the Ubuntu Server - SIEM VM to ensure consistent addressing within the LAN Segment. This is critical for Wazuh agent-to-manager communication - all agents on monitored endpoints are configured to point to this fixed IP address. The default gateway is set to 192.168.100.1 pointing to pfSense. All internet bound traffic from this machine routes through pfSense via VMware NAT. Internal traffic to other VMs stays on the LAN Segment and bypasses pfSense entirely.
+A static IP address was manually assigned to the Ubuntu Server - SIEM VM to ensure consistent addressing within the LAN Segment. This is critical for Wazuh agent-to-manager communication - all agents on monitored endpoints are configured to point to this fixed IP address. The default gateway is set to 192.168.100.1, pointing to [pfSense](pfsense-setup.md). All internet-bound traffic from this machine routes through pfSense via VMware NAT. Internal traffic to other VMs stays on the LAN Segment and bypasses pfSense entirely.
 
 ### Static IP Assignment
 
@@ -40,16 +40,47 @@ A static IP address was manually assigned to the Ubuntu Server - SIEM VM to ensu
 | Gateway | 192.168.100.1 |
 | DNS | 192.168.100.1 (pfSense) |
 
-The screenshot below shows the output of `ip a` confirming the static IP address has been correctly assigned to the Ubuntu Server - SIEM VM.
+The static IP address was assigned by editing the netplan configuration file:
+```bash
+sudo nano /etc/netplan/50-cloud-init.yaml
+```
+
+The following configuration was applied:
+```yaml
+network:
+  ethernets:
+    ens33:
+      dhcp4: no
+      addresses: [192.168.100.10/24]
+      nameservers:
+        addresses: [192.168.100.1]
+      routes:
+        - to: default
+          via: 192.168.100.1
+  version: 2
+```
+
+Changes were applied with:
+```bash
+sudo netplan apply
+```
+
+The screenshot below shows the output of `ip a` confirming the static IP address is active on the Ubuntu Server - SIEM VM.
 
 ![Ubuntu IP Configuration](../images/ubuntu-ip-config.png)
 
+The screenshot below shows the output of `ip route` confirming the default gateway is correctly set to 192.168.100.1.
+
+![Ubuntu IP Route](../images/siem-ip-route.png)
+
 ## System Update
 
-After installation the system package list and all installed packages were updated to ensure the latest libraries and security patches are in place before Wazuh installation.
+After installation, the system package list and all installed packages were updated to ensure the latest libraries and security patches are in place before Wazuh installation.
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
+
+![Ubuntu System Update](../images/ubuntu-system-update.png)
 
 ## Wazuh Services
 
@@ -68,33 +99,20 @@ The screenshot below confirms all three Wazuh services are active and running.
 
 ## Connectivity Verification
 
-After static IP assignment connectivity to all other VMs on the LAN Segment and to the pfSense gateway was verified using ping to confirm the network is functioning correctly.
+After static IP assignment, connectivity was verified across the most critical communication path for Ubuntu Server - SIEM. For full network connectivity verification across all critical lab communication paths, see [Static IP Configuration](../architecture/static-ip-configuration.md).
 
-### Ubuntu Server - SIEM - pfSense Gateway
+### Ubuntu Server - SIEM → Ubuntu Server - SOAR
+Confirms the SIEM can forward alerts to the SOAR server. If this fails, no cases are created in TheHive.
 ```bash
-ping 192.168.100.1
+ping 192.168.100.40
 ```
 
-![Ping Test Ubuntu to Gateway](../images/ping-test-gateway.png)
-
-### Ubuntu Server - SIEM - Windows 11
-```bash
-ping 192.168.100.20
-```
-
-![Ping Test Ubuntu to Windows](../images/ping-test-server-to-windows.png)
-
-### Ubuntu Server - SIEM - Kali Linux
-```bash
-ping 192.168.100.30
-```
-
-![Ping Test Ubuntu to Kali](../images/ping-test-server-to-kali.png)
+![Ping Test SIEM to SOAR](../images/ping-test-siem-to-soar.png)
 
 ## Configuration Notes
 
 - Ubuntu Server - SIEM runs headless with no desktop environment installed, reducing RAM and CPU overhead and leaving more resources available for the Wazuh stack
-- 80GB storage was allocated specifically to accommodate Wazuh log data accumulation over time as lab exercises are performed - this is the most storage-intensive VM in the lab
+- 80GB storage was allocated specifically to accommodate Wazuh log data accumulation over time, as lab exercises are performed - this is the most storage-intensive VM in the lab
 - All Wazuh services are set to start automatically on boot via systemctl enable, meaning the SIEM is fully operational as soon as the VM boots without manual intervention
 - The Wazuh dashboard is accessible via browser from the Windows 11 VM at `https://192.168.100.10`
-- Internet access is available through pfSense via VMware NAT for package updates and tool downloads as needed
+- Internet access is available through [pfSense](pfsense-setup.md) via VMware NAT for package updates and tool downloads as needed
