@@ -21,7 +21,7 @@ Windows 11 Home was installed as a virtual machine in VMware Workstation using t
 
 ### Windows 11 Desktop
 
-The screenshot below confirms the Windows 11 VM is fully installed and operational.
+The screenshot below shows the Windows 11 Desktop and confirms the Windows 11 VM is installed and operational.
 
 ![Windows 11 Desktop](../images/windows-desktop.png)
 
@@ -58,7 +58,7 @@ Two local user accounts were created on the Windows 11 VM to simulate a realisti
 
 Both accounts were created as local accounts with no Microsoft account linking. The j.doe account is intentionally assigned a weak password to support brute force simulation exercises.
 
-The screenshot below shows both accounts listed via PowerShell, confirming successful creation.
+The screenshot below shows both accounts listed via PowerShell, confirming successful creation and deployment.
 
 ![Windows 11 Users](../images/windows-users.png)
 
