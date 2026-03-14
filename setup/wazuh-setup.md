@@ -6,13 +6,13 @@ This document covers the installation and configuration of the Wazuh SIEM stack 
 
 Wazuh was chosen as the SIEM platform for this lab over alternatives such as Splunk and Elastic SIEM for the following reasons:
 
-**Cost** - Wazuh is completely free and open source with no licensing restrictions. Splunk's free tier is limited to 500MB of data per day, which is insufficient for a lab generating continuous endpoint telemetry. Elastic SIEM requires significant configuration overhead to reach feature parity with Wazuh out of the box.
+**Cost** - Wazuh is free and open-source, with no licensing restrictions. Splunk's free tier is limited in the amount of data you can collect data per day, which is not ideal for a lab generating endpoint telemetry. Elastic stack SIEM requires significant configuration overhead to reach similar capabilities with Wazuh out of the box.
 
-**Enterprise Relevance** - Wazuh is widely deployed in real enterprise environments, making it directly relevant to SOC analyst job roles. Experience with Wazuh translates directly to real world skills rather than being purely academic.
+**Enterprise Relevance** - Wazuh is widely deployed in production environments, making it directly relevant to industry standards. Experience with Wazuh incorporates real-world skills and techniques used by industry professionals.
 
-**All-in-One Stack** - Wazuh provides a complete SIEM solution, including log collection, threat detection, alerting, and a dashboard in a single installation. This reduces setup complexity and allows focus on security operations rather than infrastructure configuration.
+**All-in-One Stack** - Wazuh provides a complete SIEM solution, including log collection, threat detection, alerting, and a dashboard in a single installation. This reduces setup complexity, maintenance overhead, and allows for focus on security operations rather than infrastructure.
 
-**Resource Efficiency** - Wazuh runs comfortably within the hardware constraints of a homelab. The full stack, including Manager, Indexer, and Dashboard, operates within 4GB RAM on Ubuntu Server - SIEM.
+**Resource Efficiency** - Wazuh generally runs more efficiently with fewer system resources than Elastic or Splunk, which is a key metric in a homelab where system resources are tightly controlled to ensure all devices can function properly.
 
 **Community and Documentation** - Wazuh has extensive official documentation, an active community, and regular updates, making troubleshooting and learning straightforward.
 
@@ -28,7 +28,7 @@ The full Wazuh stack consists of three components, all installed on Ubuntu Serve
 
 ## Prerequisites
 
-Before installing Wazuh ensure Ubuntu Server - SIEM is fully installed, the static IP is configured, and the system packages have been updated. Full details are documented in [Ubuntu Server - SIEM Setup](siem-server-setup.md). Internet access through [pfSense](pfsense-setup.md) is required to download the Wazuh installation script.
+Before installing Wazuh, ensure Ubuntu Server - SIEM is fully installed, the static IP is configured, and the system packages have been updated. Full details are documented in [Ubuntu Server - SIEM Setup](siem-server-setup.md). Internet access through [pfSense](pfsense-setup.md) is required to download the Wazuh installation script.
 
 ## Installation
 
@@ -41,13 +41,13 @@ curl -sO https://packages.wazuh.com/4.11/wazuh-install.sh && sudo bash ./wazuh-i
 
 The quickstart script handles all dependency installation, service configuration, and initial setup automatically. After the script completes, all three Wazuh services are running, and the dashboard is accessible via browser.
 
-📸 Note the admin credentials displayed at the end of the installation output - these are required to log into the Wazuh dashboard.
+###### Note the admin credentials displayed at the end of the installation output - these are required to log into the Wazuh dashboard.
 
 ![Wazuh Installation](../images/wazuh-installation.png)
 
 ## Accessing the Dashboard
 
-The Wazuh dashboard is accessible from the Windows 11 VM browser at:
+The Wazuh dashboard is accessible through an internet browser using the Ubuntu Siem Servers IP address as the domain:
 ```
 https://192.168.100.10
 ```
@@ -82,28 +82,18 @@ wazuh-dashboard: active
 
 ## Agent Deployment
 
-After the Wazuh stack was confirmed operational, a Wazuh agent was deployed on the Windows 11 target endpoint to begin forwarding security logs to the Wazuh Manager. The screenshot below shows the Windows 11 agent appearing as active in the Wazuh dashboard, confirming successful agent-to-manager communication. Full agent installation details are documented in [Wazuh Agent Setup](wazuh-agent-setup.md).
+After the Wazuh stack was confirmed operational, a Wazuh agent was deployed on the Windows 11 target endpoint through the Wazuh dashboard to begin forwarding security logs to the Wazuh Manager. The screenshot below shows the Windows 11 agent appearing as active in the Wazuh dashboard, confirming successful communication to Wazuh-manager. Full agent installation details are documented in [Wazuh Agent Setup](wazuh-agent-setup.md).
 
 ![Wazuh Agent Dashboard](../images/wazuh-agent-dashboard.png)
 
 ## Starting Wazuh After Reboot
 
-Wazuh services can be started manually after booting Ubuntu Server - SIEM with the following commands:
+Wazuh services can be enabled to start automatically after booting Ubuntu Server - SIEM with the following commands:
 ```bash
-sudo systemctl start wazuh-manager
-sudo systemctl start wazuh-indexer
-sudo systemctl start wazuh-dashboard
+sudo systemctl enable wazuh-manager
+sudo systemctl enable wazuh-indexer
+sudo systemctl enable wazuh-dashboard
 ```
-
-## Troubleshooting Encountered
-
-### Wazuh Manager Timeout on Startup
-
-After the initial installation, the Wazuh Manager service occasionally failed to start with a `failed (result: timeout)` error, indicating the service was taking too long to initialize and being killed by systemd before fully starting.
-
-**Root cause:** The issue was caused by insufficient system resources during startup when multiple services were initializing simultaneously after a cold boot.
-
-**Resolution:** A full reboot of the Ubuntu Server - SIEM VM resolved the issue. After the reboot, all three Wazuh services started successfully and have been stable since.
 
 ## Configuration Notes
 
