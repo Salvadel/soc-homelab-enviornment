@@ -13,9 +13,7 @@ This document covers the installation, configuration, and verification of the Wa
 
 ## Prerequisites
 
-Before installing the agent ensure the Wazuh stack is fully installed and operational on Ubuntu Server - SIEM. Full installation details are documented in [Wazuh Setup](wazuh-setup.md).
-
-Internet access for downloading the agent package from packages.wazuh.com is available through pfSense via VMware NAT. No network adapter changes are required prior to installation.
+Before installing the agent ensure the Wazuh stack is fully installed and operational on Ubuntu Server - SIEM. Full installation details are documented in [Wazuh Setup](wazuh-setup.md). Internet access for downloading the agent package from packages.wazuh.com is available through [pfSense](pfsense-setup.md). No network adapter changes are required prior to installation.
 
 ## Installation
 
@@ -71,7 +69,7 @@ The screenshot below shows an individual Sysmon event expanded to display its fu
 
 ## Troubleshooting Encountered
 
-### Issue - Sysmon logs not appearing in Wazuh dashboard
+### Sysmon Logs Not Appearing in Wazuh Dashboard
 
 After installation Sysmon events were not appearing in the Wazuh dashboard despite the agent actively forwarding other Windows logs.
 
@@ -85,12 +83,12 @@ After installation Sysmon events were not appearing in the Wazuh dashboard despi
 </localfile>
 ```
 
-After saving the file the WazuhSvc service was restarted to apply the change:
+After saving the file, the WazuhSvc service was restarted to apply the change:
 ```powershell
 Restart-Service WazuhSvc
 ```
 
-Sysmon events began appearing in the Wazuh dashboard immediately after the restart.
+Sysmon events began appearing in the Wazuh dashboard after the restart.
 
 ## Agent Log Location
 
@@ -108,6 +106,7 @@ type "C:\Program Files (x86)\ossec-agent\ossec.log"
 
 - The agent configuration file is located at `C:\Program Files (x86)\ossec-agent\ossec.conf`
 - The Manager IP is set to 192.168.100.10 in the configuration file
-- No custom agent configuration has been applied beyond default settings
-- The agent collects Windows Event Logs and Sysmon logs which are forwarded to the Wazuh Manager in real time
+- No custom agent configuration has been applied beyond the Sysmon localfile entry added during troubleshooting
+- The agent collects Windows Event Logs and Sysmon logs, which are forwarded to the Wazuh Manager in real time
+- Both WazuhSvc and Sysmon64 are set to start automatically on boot, ensuring the monitoring stack is fully operational without manual intervention after each reboot
 - A future improvement is to configure custom log collection rules within ossec.conf to expand the scope of events collected
