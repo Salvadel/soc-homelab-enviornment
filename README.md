@@ -14,13 +14,15 @@ A home Security Operations Center (SOC) lab designed for simulating real-world t
 | pfSense | Network perimeter firewall and router |
 | Windows 11 Home | Target endpoint simulating a corporate workstation |
 | Kali Linux | Attack machine used to simulate threat actor behavior |
-| Ubuntu Server 24 - SIEM | SIEM server hosting the full Wazuh stack |
-| Ubuntu Server 24 - SOAR | SOAR server hosting Shuffle and TheHive |
+| Ubuntu Server - SIEM | SIEM server hosting the full Wazuh stack |
+| Ubuntu Server - SOAR | SOAR server hosting Shuffle, TheHive, and IOC enrichment integrations |
 | Wazuh | Open source SIEM for log collection, alerting, and dashboarding |
 | Sysmon | Windows endpoint telemetry enhancement tool |
 | Shuffle | Open source SOAR platform for automated alert response workflows |
 | TheHive | Open source case management platform for incident investigation |
 | Slack | Analyst notification platform integrated with Shuffle |
+| VirusTotal | IOC enrichment - IP, hash, and URL reputation lookups |
+| AbuseIPDB | IOC enrichment - IP reputation and abuse reporting |
 
 ## Repository Structure
 ```
@@ -66,7 +68,7 @@ Start here for a full understanding of the lab design, network topology, data fl
 | [Static IP Configuration](architecture/static-ip-configuration.md) | IP assignment table and connectivity verification between all five VMs |
 
 ### Setup
-Follow these documents in order to build the lab enviornment. Each document covers the installation and configuration of a single component.
+Follow these documents to build the lab environment. Each document covers the installation and configuration of a single component.
 
 | Order | Document | Description |
 |---|---|---|
@@ -79,7 +81,7 @@ Follow these documents in order to build the lab enviornment. Each document cove
 | 7 | [Wazuh Agent Setup](setup/wazuh-agent-setup.md) | Agent installation on Windows 11, Sysmon log collection configuration, and troubleshooting |
 | 8 | [Sysmon Setup](setup/sysmon-setup.md) | Sysmon installation, service configuration, and Wazuh integration |
 | 9 | [Ubuntu Server - SOAR Setup](setup/soar-server-setup.md) | OS installation, network configuration, and Docker installation |
-| 10 | [Shuffle Setup](setup/shuffle-setup.md) | Shuffle installation, Wazuh webhook configuration, and automation workflow setup |
+| 10 | [Shuffle Setup](setup/shuffle-setup.md) | Shuffle installation, Wazuh webhook configuration, IOC enrichment integration, and automation workflow setup |
 | 11 | [TheHive Setup](setup/thehive-setup.md) | TheHive installation, Shuffle integration, and case management configuration |
 
 ### Projects
