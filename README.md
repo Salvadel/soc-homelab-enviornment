@@ -31,9 +31,6 @@ soc-homelab/
 ├── architecture/
 │   ├── architecture-overview.md
 │   ├── static-ip-configuration.md
-│   └── images/
-│       ├── network-diagram.png
-│       └── data-flow-diagram.png
 ├── setup/
 │   ├── vmware-setup.md
 │   ├── pfsense-setup.md
