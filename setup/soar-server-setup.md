@@ -29,7 +29,7 @@ The screenshot below confirms the Ubuntu Server - SOAR VM is fully installed and
 
 ## Network Configuration
 
-A static IP address was assigned to the Ubuntu Server - SOAR VM during installation to ensure consistent addressing within the LAN Segment. The default gateway is set to 192.168.100.1, pointing to [pfSense](pfsense-setup.md). All internet-bound traffic from this machine routes through pfSense via VMware NAT, which is required for Docker installation and Slack notification delivery. Internal traffic to other VMs stays on the LAN Segment and bypasses pfSense entirely.
+A static IP address was assigned to the Ubuntu Server - SOAR VM during installation to ensure consistent addressing within the LAN Segment. The default gateway is set to 192.168.100.1, pointing to [pfSense](pfsense-setup.md). All internet-bound traffic from this machine routes through pfSense via VMware NAT, which is required for Docker installation, Slack notification delivery, and IOC enrichment queries to VirusTotal and AbuseIPDB. Internal traffic to other VMs stays on the LAN Segment and bypasses pfSense entirely.
 
 ### Static IP Assignment
 
@@ -106,7 +106,7 @@ Expected output should show **active (running)**.
 
 ## SOAR Services
 
-Shuffle and TheHive are installed and running on Ubuntu Server - SOAR. Both services are configured to start automatically on boot via Docker. Full installation details are documented in [Shuffle Setup](shuffle-setup.md) and [TheHive Setup](thehive-setup.md). The official TheHive Docker installation guide can be found at the [TheHive Docker Deployment Guide](https://docs.strangebee.com/thehive/installation/docker/).
+Shuffle and TheHive are installed and running on Ubuntu Server - SOAR. Both services are configured to start automatically on boot via Docker. Shuffle is configured to enrich incoming Wazuh alerts with IOC data from VirusTotal and AbuseIPDB before creating cases in TheHive and sending Slack notifications to the analyst. Full installation details are documented in [Shuffle Setup](shuffle-setup.md) and [TheHive Setup](thehive-setup.md). The official TheHive Docker installation guide can be found at the [TheHive Docker Deployment Guide](https://docs.strangebee.com/thehive/installation/docker/).
 
 To verify both services are running:
 ```bash
@@ -137,5 +137,5 @@ ping 192.168.100.1
 - All SOAR services start automatically on boot via Docker, meaning the SOAR stack is fully operational as soon as the VM boots without manual intervention
 - The Shuffle dashboard is accessible via browser from the Windows 11 VM at `http://192.168.100.40:3001`
 - The TheHive dashboard is accessible via browser from the Windows 11 VM at `http://192.168.100.40:9000`
-- Internet access is available through [pfSense](pfsense-setup.md) via VMware NAT for Docker installation, tool downloads, and Slack notification delivery
+- Internet access is available through [pfSense](pfsense-setup.md) via VMware NAT for Docker installation, tool downloads, Slack notification delivery, and IOC enrichment queries to VirusTotal and AbuseIPDB
 - Username on this VM is `soarsadmin`
