@@ -9,7 +9,6 @@ This document covers the VMware Workstation setup and configuration for the SOC 
 | Property | Value |
 |---|---|
 | Hypervisor | VMware Workstation |
-| Host RAM | 32GB |
 | Network Type | LAN Segment |
 | Subnet | 192.168.100.0/24 |
 | DHCP | Disabled |
@@ -97,8 +96,8 @@ The screenshot below shows the Ubuntu Server - SOAR VM hardware configuration, i
 | Property | Value |
 |---|---|
 | Operating System | Ubuntu Server 24 |
-| RAM | 8GB |
-| CPUs | 2 |
+| RAM | 16GB |
+| CPUs | 4 |
 | Storage | 80GB |
 | Network Adapter | LAN Segment |
 | IP Address | 192.168.100.40 |
