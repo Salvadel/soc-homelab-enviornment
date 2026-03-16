@@ -7,8 +7,8 @@ This document covers the installation and configuration of the Ubuntu Server - S
 | Property | Value |
 |---|---|
 | Operating System | Ubuntu Server 24 |
-| RAM | 8GB |
-| CPUs | 2 |
+| RAM | 16GB |
+| CPUs | 4 |
 | Storage | 80GB |
 | Network Adapter | LAN Segment |
 | IP Address | 192.168.100.40 |
