@@ -96,7 +96,7 @@ The screenshot below shows the Ubuntu Server - SOAR VM hardware configuration, i
 | Property | Value |
 |---|---|
 | Operating System | Ubuntu Server 24 |
-| RAM | 16GB |
+| RAM | 20GB |
 | CPUs | 4 |
 | Storage | 80GB |
 | Network Adapter | LAN Segment |
