@@ -58,8 +58,6 @@ On first access, Shuffle will prompt you to create an admin account. The followi
 | Email | admin@soc.local |
 | Password | set during installation |
 
-📸 Note - Shuffle does not send a verification email. Any email in a valid format works for account creation.
-
 ![Shuffle Dashboard](../images/shuffle-dashboard.png)
 
 ## Wazuh Integration
