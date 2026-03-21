@@ -105,7 +105,7 @@ A dedicated organisation was created for the lab:
 - Task sharing rule: `Manual`
 - Observables sharing rule: `Manual`
 
-![TheHive Organisation](../images/thehive-organisation.png)
+![TheHive Organization](../images/thehive-organization.png)
 
 ### Shuffle Integration User
 
