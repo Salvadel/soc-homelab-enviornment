@@ -89,7 +89,7 @@ Change the default password immediately after the first login.
 
 ### License Registration
 
-TheHive installs with a 16-day Platinum trial license. A free Community license was requested from StrangeBee to replace the trial before expiry. The Community license can be requested at [StrangeBee Community Edition](https://www.strangebee.com/thehive/community-edition/).
+TheHive installs with a 16-day Platinum trial license. A free Community license was requested from StrangeBee to replace the trial before expiry. The Community license can be requested at [StrangeBee Community Edition](https://docs.strangebee.com/thehive/installation/licenses/request-a-community-license).
 
 Once the license key is received, apply it by navigating to:
 ```
@@ -118,9 +118,13 @@ A dedicated service account was created for Shuffle to use when creating cases a
 | Profile | analyst |
 | Organisation | SOC-Homelab |
 
-An API key was generated for this user and saved for use in the Shuffle workflow configuration. Full details on the Shuffle integration are documented in [Shuffle Setup](shuffle-setup.md).
+An API key was generated for the admin account for direct API access and saved separately. Full details are documented in the screenshot below.
 
-![TheHive Shuffle User](../images/thehive-shuffle-user.png)
+![TheHive Admin API Key](../images/thehive-api-key.png)
+
+A second API key was generated specifically for the Shuffle integration user and saved for use in the Shuffle workflow configuration.
+
+![TheHive Shuffle User](../images/thehive-soclab-api-key.png)
 
 ## Starting TheHive After Reboot
 
