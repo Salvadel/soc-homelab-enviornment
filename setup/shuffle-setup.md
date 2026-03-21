@@ -74,7 +74,7 @@ Wazuh is configured to forward alerts to Shuffle via a webhook trigger. When a q
 http://192.168.100.40:3001/api/v1/hooks/webhook_XXXXXXXX
 ```
 
-📸 **Screenshot** - name it `shuffle-webhook.png` showing the webhook trigger with the URL visible.
+![shuffle webhook](shuhffle-webhook.png)
 
 ### Step 2 - Configure Wazuh to Forward Alerts
 
@@ -119,7 +119,7 @@ In the Shuffle workflow editor:
 $exec.all_fields.data.srcip
 ```
 
-📸 **Screenshot** - name it `shuffle-virustotal.png` showing the VirusTotal action configured in the workflow.
+![shuffle virustotal](shuffle-virustotal.png)
 
 ### AbuseIPDB Integration
 
@@ -134,7 +134,7 @@ In the Shuffle workflow editor:
 $exec.all_fields.data.srcip
 ```
 
-📸 **Screenshot** - name it `shuffle-abuseipdb.png` showing the AbuseIPDB action configured in the workflow.
+![shuffle AbuseIDB](shuffle-abuseidb.png)
 
 ## TheHive Integration
 
@@ -162,7 +162,7 @@ Map the following fields from the Wazuh alert to the TheHive case:
 | Description | `$exec.all_fields.full_log` |
 | Source IP | `$exec.all_fields.data.srcip` |
 
-📸 **Screenshot** - name it `shuffle-thehive-integration.png` showing the TheHive action configured in the workflow.
+![shuffle integration thehive](shuffle-thehive-integration.png)
 
 ## Slack Integration
 
@@ -192,7 +192,7 @@ Source IP: $exec.all_fields.data.srcip
 TheHive Case Created - Investigate at http://192.168.100.40:9000
 ```
 
-📸 **Screenshot** - name it `shuffle-slack-integration.png` showing the Slack action configured in the workflow.
+![shuffle slack integration](shuffle-slack-integration.png)
 
 ## Complete Workflow
 
@@ -211,7 +211,7 @@ TheHive Case Created
 Slack Notification Sent
 ```
 
-📸 **Screenshot** - name it `shuffle-workflow-complete.png` showing the full workflow canvas with all steps connected.
+![shuffle workflow](shuffle-workflow-complete.png)
 
 ## Testing the Workflow
 
