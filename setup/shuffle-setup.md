@@ -33,7 +33,7 @@ cd Shuffle
 docker compose up -d
 ```
 
-This pulls all required Docker images and starts the Shuffle containers. The initial pull may take several minutes, depending on internet speed.
+This pulls all required Docker images and starts the Shuffle containers. The initial pull may take several minutes, depending on the internet speed.
 
 **Step 3 - Verify Shuffle containers are running:**
 ```bash
@@ -42,7 +42,7 @@ docker ps
 
 You should see several Shuffle containers all showing `Up` status.
 
-![Shuffle Containers Running](../images/shuffle-containers-running.png)
+![Shuffle Containers Running](../images/soar-docker-running.png)
 
 ## Accessing the Dashboard
 
