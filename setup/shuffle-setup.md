@@ -100,8 +100,6 @@ Restart the Wazuh Manager to apply the change:
 sudo systemctl restart wazuh-manager
 ```
 
-📸 **Screenshot** - name it `shuffle-wazuh-integration.png` showing the ossec.conf integration block.
-
 ## IOC Enrichment
 
 Shuffle is configured to automatically enrich incoming Wazuh alerts with threat intelligence data by querying VirusTotal and AbuseIPDB for the source IP address extracted from each alert.
