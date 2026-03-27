@@ -74,7 +74,7 @@ Wazuh is configured to forward alerts to Shuffle via a webhook trigger. When a q
 http://192.168.100.40:3001/api/v1/hooks/webhook_XXXXXXXX
 ```
 
-![shuffle webhook](shuffle-webhook.png)
+![shuffle webhook](../images/shuffle-webhook.png)
 
 ### Step 2 - Configure Wazuh to Forward Alerts
 
