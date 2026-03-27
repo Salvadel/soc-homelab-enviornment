@@ -41,10 +41,6 @@ curl -sO https://packages.wazuh.com/4.11/wazuh-install.sh && sudo bash ./wazuh-i
 
 The quickstart script handles all dependency installation, service configuration, and initial setup automatically. After the script completes, all three Wazuh services are running, and the dashboard is accessible via browser.
 
-###### Note the admin credentials displayed at the end of the installation output - these are required to log into the Wazuh dashboard.
-
-![Wazuh Installation](../images/wazuh-installation.png)
-
 ## Accessing the Dashboard
 
 The Wazuh dashboard is accessible through an internet browser using the Ubuntu Siem Servers IP address as the domain:
