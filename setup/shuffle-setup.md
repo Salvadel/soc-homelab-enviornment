@@ -42,7 +42,7 @@ docker ps
 
 You should see several Shuffle containers all showing `Up` status.
 
-![Shuffle Containers Running](../images/shuffle-container-running.png)
+![Shuffle Containers Running](../images/shuffle-containers-running.png)
 
 ## Docker Configuration
 
@@ -231,23 +231,23 @@ In the Shuffle workflow editor, add an **HTTP** app action connected after the T
 
 The body uses pipe separators instead of newlines to avoid JSON parsing errors caused by special characters in alert titles. `$http_1.body._id` references the TheHive alert ID returned by the previous HTTP node, providing a direct reference to the created alert.
 
-![Slack Alert Received](../images/slack-alert-recieved.png)
+![Slack Alert Received](../images/slack-alert-received.png)
 
 ## Complete Workflow
 
-The completed Shuffle workflow connects all five steps into a single automated pipeline. 
+The completed Shuffle workflow connects all five steps into a single automated pipeline. VirusTotal and AbuseIPDB run in parallel as enrichment steps before TheHive and Slack fire sequentially:
 
 ```
 Wazuh Alert
-    |
+    ↓
 Webhook Trigger
-    |
-VirusTotal         
-    |
-AbuseIPDB
-    |
+    ↓
+VirusTotal IOC Lookup
+    ↓
+AbuseIPDB IOC Lookup
+    ↓
 TheHive Alert Created
-    |
+    ↓
 Slack Notification Sent
 ```
 
@@ -267,7 +267,7 @@ After starting the containers with `docker compose up -d` the Shuffle dashboard 
 
 Workflow nodes, including basic echo tests, would hang indefinitely with no result.
 
-**Root cause:** Three misconfigured environment variables in `docker-compose.yml` prevented Orborus from spawning and communicating with worker containers. `SHUFFLE_SWARM_CONFIG=run` caused Orborus to attempt Docker Swarm service deployments which fails on a single-node setup. `SHUFFLE_WORKER_SERVER_URL` was empty, causing Orborus to fall back to an unresolvable hostname. `BASE_URL` pointed to the frontend port 3001 instead of the backend port 5001.
+**Root cause:** Three misconfigured environment variables in `docker-compose.yml` prevented Orborus from spawning and communicating with worker containers. `SHUFFLE_SWARM_CONFIG=run` caused Orborus to attempt Docker Swarm service deployments, which fail on a single-node setup. `SHUFFLE_WORKER_SERVER_URL` was empty, causing Orborus to fall back to an unresolvable hostname. `BASE_URL` pointed to the frontend port 3001 instead of the backend port 5001.
 
 **Resolution:** Set `SHUFFLE_SWARM_CONFIG=off`, `SHUFFLE_WORKER_SERVER_URL=http://192.168.100.40:33333`, and `BASE_URL=http://shuffle-backend:5001` in the orborus service environment section of `docker-compose.yml`, then restarted the containers.
 
