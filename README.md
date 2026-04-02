@@ -63,7 +63,7 @@ Follow these documents to build the lab environment. Each document covers the in
 | Order | Document | Description |
 |---|---|---|
 | 1 | [VMware Setup](setup/vmware-setup.md) | Hypervisor configuration, VM hardware specs, network configuration, and baseline snapshots |
-| 2 | [pfSense Setup](setup/pfsense-setup.md) | Firewall installation, WAN and LAN adapter configuration, and traffic routing verification |
+| 2 | [pfSense Setup](setup/pfsense-setup.md) | WAN and LAN adapter configuration, and traffic routing verification |
 | 3 | [Windows 11 Setup](setup/windows11-setup.md) | OS installation, network configuration, user accounts, and intentional vulnerability configuration |
 | 4 | [Kali Linux Setup](setup/kali-setup.md) | OS installation, network configuration, system update, and lab exercise roles |
 | 5 | [Ubuntu Server - SIEM Setup](setup/siem-server-setup.md) | OS installation, network configuration, and Wazuh service verification |
