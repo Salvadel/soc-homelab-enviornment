@@ -80,3 +80,6 @@ Documented projects performed by the SOC-lab, full documentation, photos, and me
 | Project | Description |
 |---|---|
 | Coming soon | - |
+
+#### To Be Added
+Firewall and logging capabilities are currently being implemented in the pfSense router; documentation is not yet available.
