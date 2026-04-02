@@ -226,7 +226,7 @@ In the Shuffle workflow editor, add an **HTTP** app action connected after the T
 
 **Body:**
 ```json
-{"text": "Wazuh Alert | Rule ID: $exec.rule_id | Severity: $exec.severity | Agent: $exec.all_fields.agent.name | TheHive ID: $http_1.body._id"}
+{"text": "Wazuh Alert | Rule ID: $exec.rule_id | Severity: $exec.severity | Agent: $exec.all_fields.agent.name | TheHive ID: $thehive.body._id"}
 ```
 
 The body uses pipe separators instead of newlines to avoid JSON parsing errors caused by special characters in alert titles. `$http_1.body._id` references the TheHive alert ID returned by the previous HTTP node, providing a direct reference to the created alert.
